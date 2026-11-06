@@ -2,12 +2,11 @@ package com.taagne.ecomme_bestplace.entities;
 
 
 import com.taagne.ecomme_bestplace.entities.base.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "products")
@@ -25,7 +24,11 @@ public class Product extends BaseEntity {
     @Column( length = 50)
     private String description;
 
+    @Column(nullable = false)
+    @NotNull(message = "You mast enter product stock")
+    private BigDecimal stock;
+
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Category category;
 }

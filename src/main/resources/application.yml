@@ -1,1 +1,37 @@
-spring.application.name=ecomme-bestplace
+
+spring:
+  application:
+    name: "Best Place"
+
+  datasource:
+    url: jdbc:mysql://localhost:54321/dataecommercebestplace?createDatabaseIfNotExist=true&serverTimezone=UTC
+    user: root
+    password:
+
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    jpa:
+
+      hibernate:
+
+        ddl-auto: update
+
+      show-sql: true
+
+      properties:
+
+        hibernate:
+
+          format_sql: true
+
+      open-in-view: false
+
+    jackson:
+
+      serialization:
+
+        indent-output: true
+
+  server:
+
+    port: 8080

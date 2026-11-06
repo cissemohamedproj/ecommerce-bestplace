@@ -1,6 +1,7 @@
 package com.taagne.ecomme_bestplace.entities;
 
 
+import com.taagne.ecomme_bestplace.entities.base.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -13,12 +14,8 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends BaseEntity {
 
-    @Column(nullable = false)
-    @Id()
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String Id;
 
     @Column(nullable = false, length = 50)
     @NotNull(message = "You mast enter User Name")
@@ -33,7 +30,5 @@ public class User {
     @NotNull(message = "Yous mast entered the password")
     private String password;
 
-    @Column()
-    @Builder.Default
-    private Boolean isActive;
+
 }

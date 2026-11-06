@@ -3,14 +3,16 @@ package com.taagne.ecomme_bestplace.entities;
 
 import com.taagne.ecomme_bestplace.entities.base.BaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @Entity
 @Table(name = "categories")
-@Builder
+@SuperBuilder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,7 +20,7 @@ import java.util.List;
 public class Category extends BaseEntity {
 
     @Column(nullable = false, length = 50)
-    @NotNull
+    @NotBlank(message = "Category name is not define")
     private String name;
 
     @Column( length = 50)

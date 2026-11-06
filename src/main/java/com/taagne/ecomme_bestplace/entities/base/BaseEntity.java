@@ -1,22 +1,20 @@
 package com.taagne.ecomme_bestplace.entities.base;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
-@Component
-@Builder
+@MappedSuperclass
+@Getter
+@Setter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseEntity {
@@ -24,9 +22,9 @@ public class BaseEntity {
     @Column(nullable = false)
     @Id()
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer Id;
+    private Long Id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -35,11 +33,9 @@ public class BaseEntity {
     private LocalDateTime updatedAt;
 
     @Column(nullable = false)
-    @Builder.Default
     private boolean isActive = true;
 
     @Column()
-    @Builder.Default
     private boolean isDeleted = false;
 
 

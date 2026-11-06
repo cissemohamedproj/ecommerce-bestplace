@@ -1,19 +1,19 @@
 package com.taagne.ecomme_bestplace.dto.category;
 
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class CategoryRequest {
 
-    @NotNull(message = "You mast enter category name")
+    @NotBlank(message = "You mast enter category name")
+    @Size(max = 50, message = "Category name mast be 50 max")
     private String categoryName;
 
+    @Size(max = 150, message = "Category description name mast be 150 max")
     private String categoryDescription;
 
 }

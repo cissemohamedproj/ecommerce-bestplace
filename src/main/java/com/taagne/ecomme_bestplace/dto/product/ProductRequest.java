@@ -1,7 +1,8 @@
 package com.taagne.ecomme_bestplace.dto.product;
 
 
-import jakarta.validation.constraints.NotNull;
+import com.taagne.ecomme_bestplace.entities.Category;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Setter
@@ -11,12 +12,12 @@ import lombok.*;
 @Builder
 public class ProductRequest {
 
-    @NotNull(message = "You mast enter product name")
+    @NotBlank(message = "You mast enter product name")
     private String prodName;
 
     private String prodDescription;
 
-    @NotNull(message = "Product category is not defined")
-    private Integer categoryId;
+    @NotBlank(message = "Product category is not defined")
+    private Category categoryId;
 
 }

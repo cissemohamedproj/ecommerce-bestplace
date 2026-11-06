@@ -4,10 +4,9 @@ package com.taagne.ecomme_bestplace.dto.product;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class ProductResponse {
 
@@ -16,4 +15,6 @@ public class ProductResponse {
     private String prodDescription;
     private Long categoryId;
     private String categoryName;
+    private boolean isActive;
+    private LocalDateTime createdAt;
 }

@@ -4,11 +4,11 @@ spring:
     name: "Best Place"
 
   datasource:
-    url: jdbc:mysql://localhost:54321/dataecommercebestplace?createDatabaseIfNotExist=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:54321/ecommerce_best_place
     user: root
     password:
 
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.postgresql.Driver
 
     jpa:
 

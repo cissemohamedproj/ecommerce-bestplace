@@ -3,8 +3,10 @@ package com.taagne.ecomme_bestplace.entities;
 
 import com.taagne.ecomme_bestplace.entities.base.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 
@@ -14,21 +16,21 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 public class Product extends BaseEntity {
 
     @Column(nullable = false, length = 50)
-    @NotNull
+    @NotBlank(message = "You mast enter product name")
     private String name;
 
     @Column( length = 50)
     private String description;
 
     @Column(nullable = false)
-    @NotNull(message = "You mast enter product stock")
+    @NotBlank(message = "You mast enter product stock")
     private BigDecimal stock;
 
-    @NotNull
+    @NotBlank(message = "category is not define")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Category category;
 }

@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Category extends BaseEntity {
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50, unique = true)
     @NotBlank(message = "Category name is not define")
     private String name;
 
@@ -28,4 +28,18 @@ public class Category extends BaseEntity {
 
     @OneToMany(mappedBy = "category")
     private List<Product> products;
+
+
+    @PrePersist
+    @PreUpdate
+    public void formatToLowerCase(){
+
+        if(this.name != null){
+            this.name = this.name.trim().toLowerCase();
+        }
+
+        if(this.description != null){
+            this.description = this.description.trim().toLowerCase();
+        }
+    }
 }

@@ -107,7 +107,6 @@ public class CategoryServiceImpl implements CategoryService{
                 .orElseThrow(
                         ()-> new RuntimeException("Category not found")
                 );
-       category.setDeleted(true);
        category.setActive(false);
        category.setDeletedAt(LocalDateTime.now());
 

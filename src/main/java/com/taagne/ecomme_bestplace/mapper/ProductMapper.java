@@ -17,7 +17,6 @@ public class ProductMapper {
                 .description(request.getProdDescription().trim())
                 .category(request.getCategoryId())
                 .active(true)
-                .deleted(false)
                 .build();
     }
 
@@ -33,5 +32,18 @@ public class ProductMapper {
                 .createdAt(product.getCreatedAt())
                 .isActive(product.isActive())
                 .build();
+    }
+
+
+    public Product toUpdateEntity(
+            ProductRequest request,
+            Product product
+
+    ){
+        product.setName(request.getProdName());
+        product.setDescription(request.getProdDescription());
+        product.setStock(request.getProdStock());
+        product.setCategory(request.getCategoryId());
+        return product;
     }
 }

@@ -16,5 +16,6 @@ public class ProductResponse {
     private Long categoryId;
     private String categoryName;
     private boolean isActive;
+    private boolean isDeleted;
     private LocalDateTime createdAt;
 }

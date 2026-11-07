@@ -13,7 +13,6 @@ public class CategoryResponse {
     private String categoryName;
     private String categoryDescription;
     private boolean isActive;
-    private boolean isDeleted;
     private LocalDateTime createdAt;
 
 }

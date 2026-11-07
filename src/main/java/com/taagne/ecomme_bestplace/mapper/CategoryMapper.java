@@ -14,7 +14,6 @@ public class CategoryMapper {
                 .name(request.getCategoryName().trim())
                 .description(request.getCategoryDescription().trim())
                .active(true)
-               .deleted(false)
                 .build();
     }
 
@@ -29,7 +28,6 @@ public class CategoryMapper {
                .categoryName(category.getName())
                .categoryDescription(category.getDescription())
                .isActive(category.isActive())
-               .isDeleted(category.isDeleted())
                .createdAt(category.getCreatedAt())
                .build();
     }

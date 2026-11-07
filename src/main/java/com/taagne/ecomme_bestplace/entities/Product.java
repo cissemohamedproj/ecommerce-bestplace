@@ -33,4 +33,17 @@ public class Product extends BaseEntity {
     @NotBlank(message = "category is not define")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Category category;
+
+
+    @PrePersist
+    @PreUpdate
+    public void formatToString(){
+        if(this.name != null){
+            this.name = this.name.trim().toLowerCase();
+        }
+
+        if(this.description != null){
+            this.description = this.description.trim().toLowerCase();
+        }
+    }
 }

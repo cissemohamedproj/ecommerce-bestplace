@@ -2,21 +2,21 @@ package com.taagne.ecomme_bestplace.services.product;
 
 
 import com.taagne.ecomme_bestplace.dto.product.ProductRequest;
+import com.taagne.ecomme_bestplace.dto.product.ProductResponse;
 import com.taagne.ecomme_bestplace.entities.Product;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductService {
 
-    Product create(ProductRequest request);
+    ProductResponse create(ProductRequest request);
 
-    Product update(Long id, ProductRequest request);
+    ProductResponse update(Long id, ProductRequest request);
 
-    List<Product> findAll();
+    List<ProductResponse> findAll();
 
-    Optional<Product> findById(Long id);
+    ProductResponse findByIdAndActiveTrue(Long id);
 
 
-    void delete(Long id);
+    Product delete(Long id);
 }

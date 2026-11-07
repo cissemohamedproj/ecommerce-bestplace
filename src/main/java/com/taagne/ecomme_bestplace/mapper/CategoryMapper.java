@@ -6,17 +6,19 @@ import com.taagne.ecomme_bestplace.entities.Category;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CategoryMaper {
+public class CategoryMapper {
 
    public Category toEntity(CategoryRequest request){
        return Category
                 .builder()
                 .name(request.getCategoryName().trim())
                 .description(request.getCategoryDescription().trim())
-               .isActive(true)
-               .isDeleted(false)
+               .active(true)
+               .deleted(false)
                 .build();
     }
+
+
 
 
     public CategoryResponse toResponse(Category category){
@@ -27,7 +29,16 @@ public class CategoryMaper {
                .categoryName(category.getName())
                .categoryDescription(category.getDescription())
                .isActive(category.isActive())
+               .isDeleted(category.isDeleted())
                .createdAt(category.getCreatedAt())
                .build();
+    }
+
+
+    public Category toUpdateEntityRequest(CategoryRequest request, Category category){
+
+       category.setName(request.getCategoryName());
+       category.setDescription(request.getCategoryDescription());
+        return category;
     }
 }

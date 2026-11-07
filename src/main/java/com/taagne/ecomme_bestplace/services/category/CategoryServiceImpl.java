@@ -4,21 +4,22 @@ package com.taagne.ecomme_bestplace.services.category;
 import com.taagne.ecomme_bestplace.dto.category.CategoryRequest;
 import com.taagne.ecomme_bestplace.dto.category.CategoryResponse;
 import com.taagne.ecomme_bestplace.entities.Category;
-import com.taagne.ecomme_bestplace.mapper.CategoryMaper;
+import com.taagne.ecomme_bestplace.mapper.CategoryMapper;
 import com.taagne.ecomme_bestplace.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService{
 
-    private final CategoryService categoryService;
     private final CategoryRepository categoryRepository;
-    private final CategoryMaper categoryMaper;
+    private final CategoryMapper categoryMapper;
 
 
 
@@ -28,7 +29,7 @@ public class CategoryServiceImpl implements CategoryService{
         return categoryRepository
                 .findAllByActiveTrue()
                 .stream()
-                .map(categoryMaper::toResponse)
+                .map(categoryMapper::toResponse)
                 .toList();
     }
 
@@ -43,13 +44,14 @@ public class CategoryServiceImpl implements CategoryService{
                          ()-> new RuntimeException("Category not found")
                  );
 
-        return categoryMaper.toResponse(category);
+        return categoryMapper.toResponse(category);
     }
 
 
 
 
     @Override
+    @Transactional
     public CategoryResponse create(CategoryRequest request) {
 
         String trimmedName = request.getCategoryName().trim();
@@ -61,9 +63,9 @@ public class CategoryServiceImpl implements CategoryService{
         if(existCategory){
             throw new RuntimeException("A category with the same name already exists");
         }
-        Category createdCategory = categoryMaper.toEntity(request);
+        Category createdCategory = categoryMapper.toEntity(request);
 
-        return categoryMaper.toResponse(
+        return categoryMapper.toResponse(
                 categoryRepository.save(createdCategory)
         );
     }
@@ -71,27 +73,28 @@ public class CategoryServiceImpl implements CategoryService{
 
 
     @Override
+    @Transactional
     public CategoryResponse update(Long id, CategoryRequest request) {
 
         String trimmedName = request.getCategoryName().trim();
 
-        categoryRepository
+       Category category = categoryRepository
                 .findByIdAndActiveTrue(id)
                 .orElseThrow(
                         () -> new RuntimeException("Category not found")
                 );
 
 
-        boolean existsCategory = categoryRepository.existsByNameAndActiveTrue(trimmedName);
+        boolean existsCategory = categoryRepository.existsByNameAndActiveTrueAndIdNot(trimmedName, id);
 
         if(existsCategory){
-            throw new RuntimeException("A category with same name already exists");
+            throw new IllegalArgumentException("A category with same name already exists");
         }
 
-        Category createdCategory = categoryMaper.toEntity(request);
+        Category updatedCategory = categoryMapper.toUpdateEntityRequest(request, category);
 
-        return categoryMaper.toResponse(
-                categoryRepository.save(createdCategory)
+        return categoryMapper.toResponse(
+                categoryRepository.save(updatedCategory)
         );
     }
 
@@ -105,6 +108,8 @@ public class CategoryServiceImpl implements CategoryService{
                         ()-> new RuntimeException("Category not found")
                 );
        category.setDeleted(true);
+       category.setActive(false);
+       category.setDeletedAt(LocalDateTime.now());
 
       return  categoryRepository.save(category);
 

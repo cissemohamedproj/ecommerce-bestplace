@@ -16,8 +16,8 @@ public class ProductMapper {
                 .name(request.getProdName().trim())
                 .description(request.getProdDescription().trim())
                 .category(request.getCategoryId())
-                .isActive(true)
-                .isDeleted(false)
+                .active(true)
+                .deleted(false)
                 .build();
     }
 

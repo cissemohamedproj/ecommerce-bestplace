@@ -4,34 +4,33 @@ spring:
     name: "Best Place"
 
   datasource:
-    url: jdbc:mysql://localhost:54321/ecommerce_best_place
-    user: root
-    password:
+    url: jdbc:postgresql://localhost:5432/ecommerce_best_place
+    username: root
+    password: ecommercebestplace
+    driver-class-name: org.postgresql.Driver
 
-    driver-class-name: com.postgresql.Driver
+  jpa:
 
-    jpa:
+    hibernate:
+
+      ddl-auto: update
+
+    show-sql: true
+
+    properties:
 
       hibernate:
 
-        ddl-auto: update
+        format_sql: true
 
-      show-sql: true
+    open-in-view: false
 
-      properties:
+  jackson:
 
-        hibernate:
+    serialization:
 
-          format_sql: true
+      indent-output: true
 
-      open-in-view: false
+server:
 
-    jackson:
-
-      serialization:
-
-        indent-output: true
-
-  server:
-
-    port: 8080
+  port: 8080

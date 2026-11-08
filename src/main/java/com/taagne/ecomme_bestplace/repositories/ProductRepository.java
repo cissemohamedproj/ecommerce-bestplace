@@ -3,7 +3,6 @@ package com.taagne.ecomme_bestplace.repositories;
 
 import com.taagne.ecomme_bestplace.entities.Category;
 import com.taagne.ecomme_bestplace.entities.Product;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +26,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     boolean existsByNameAndActiveTrue(String name);
 
-    List<Product> findByCategory(Category category);
+    List<Product> findByCategory_IdAndActiveTrue(Long category);
 
 }

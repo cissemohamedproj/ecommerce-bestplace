@@ -113,7 +113,7 @@ public class ProductServiceImpl implements ProductService {
                         ()-> new RuntimeException("Category not found")
                 );
         return productRepository
-                        .findByCategory(existingCategory)
+                        .findByCategory_IdAndActiveTrue(existingCategory.getId())
                         .stream()
                         .map(productMapper::toResponse)
                         .toList();

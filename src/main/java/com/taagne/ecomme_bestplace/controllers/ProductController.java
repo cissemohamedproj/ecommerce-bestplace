@@ -65,10 +65,10 @@ public class ProductController {
     @GetMapping("/category/{id}")
     public ResponseEntity<List<ProductResponse>> findByCategoryId(
             @PathVariable
-            Long categoryId
+            Long id
     ){
         return ResponseEntity
-                .ok(productService.findByCategory(categoryId));
+                .ok(productService.findByCategory(id));
     }
 
 

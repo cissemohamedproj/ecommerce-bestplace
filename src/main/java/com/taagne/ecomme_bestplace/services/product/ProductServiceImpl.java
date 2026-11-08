@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
                 );
 
         boolean existingProduct = productRepository
-                .existsByNameIgnoreCaseAndCategoryAndActiveTrue(trimName, category);
+                .existsByNameIgnoreCaseAndCategory_IdAndActiveTrue(trimName, category.getId());
 
         if(existingProduct){
             throw new IllegalArgumentException("A Product with the same Name already exists in this Category");
@@ -68,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
                 );
 
         boolean existingProduct = productRepository
-                .existsByNameIgnoreCaseAndCategoryAndActiveTrueAndIdNot(trimName, category, id);
+                .existsByNameIgnoreCaseAndCategory_IdAndActiveTrueAndIdNot(trimName, category.getId(), id);
 
         if(existingProduct){
             throw new IllegalArgumentException("A Product with the same Name already exists in this Category");

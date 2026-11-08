@@ -1,7 +1,6 @@
 package com.taagne.ecomme_bestplace.repositories;
 
 
-import com.taagne.ecomme_bestplace.entities.Category;
 import com.taagne.ecomme_bestplace.entities.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -20,9 +19,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     boolean existsByNameIgnoreCaseAndActiveTrueAndIdNot(Long id, String name);
 
-    boolean existsByNameIgnoreCaseAndCategoryAndActiveTrue(String name, Category category);
+    boolean existsByNameIgnoreCaseAndCategory_IdAndActiveTrue(String name, Long category);
 
-    boolean existsByNameIgnoreCaseAndCategoryAndActiveTrueAndIdNot( String name, Category category, Long id);
+    boolean existsByNameIgnoreCaseAndCategory_IdAndActiveTrueAndIdNot(String name, Long category, Long id);
 
     boolean existsByNameAndActiveTrue(String name);
 

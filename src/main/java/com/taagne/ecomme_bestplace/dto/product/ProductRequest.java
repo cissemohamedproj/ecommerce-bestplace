@@ -4,6 +4,8 @@ package com.taagne.ecomme_bestplace.dto.product;
 import com.taagne.ecomme_bestplace.entities.Category;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -17,10 +19,15 @@ public class ProductRequest {
 
     private String prodDescription;
 
-    @NotBlank(message = "Stock is not define")
+    @NotNull(message = "Stock is not define")
+    @Positive(message = "Stock is not valid")
     private BigDecimal prodStock;
 
-    @NotBlank(message = "Product category is not defined")
-    private Category categoryId;
+    @NotNull(message = "Price is not define")
+    @Positive(message = "Price is not valid")
+    private BigDecimal prodPrice;
+
+    @NotNull(message = "Product category is not defined")
+    private Long categoryId;
 
 }

@@ -11,12 +11,12 @@ import java.util.Optional;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-    boolean findByName(String name);
+    boolean findByNameIgnoreCase(String name);
 
 
-    boolean existsByNameAndActiveTrue(String name);
+    boolean existsByNameIgnoreCaseAndActiveTrue(String name);
 
-    boolean existsByNameAndActiveTrueAndIdNot(String name, Long id);
+    boolean existsByNameIgnoreCaseAndActiveTrueAndIdNot(String name, Long id);
 
 
 

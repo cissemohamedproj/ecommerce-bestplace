@@ -39,9 +39,4 @@ public class BaseEntity {
     @Column(nullable = false)
     private boolean active = true;
 
-//    @Column()
-//    private boolean deleted = false;
-
-
-
 }

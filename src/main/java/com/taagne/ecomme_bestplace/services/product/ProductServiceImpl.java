@@ -3,8 +3,10 @@ package com.taagne.ecomme_bestplace.services.product;
 
 import com.taagne.ecomme_bestplace.dto.product.ProductRequest;
 import com.taagne.ecomme_bestplace.dto.product.ProductResponse;
+import com.taagne.ecomme_bestplace.entities.Category;
 import com.taagne.ecomme_bestplace.entities.Product;
 import com.taagne.ecomme_bestplace.mapper.ProductMapper;
+import com.taagne.ecomme_bestplace.repositories.CategoryRepository;
 import com.taagne.ecomme_bestplace.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,20 +19,29 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
 
-    private final ProductService productService;
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final CategoryRepository categoryRepository;
 
     @Override
     @Transactional
     public ProductResponse create(ProductRequest request) {
         String trimName = request.getProdName().trim();
+
+        Category category = categoryRepository
+                .findByIdAndActiveTrue(request.getCategoryId())
+                .orElseThrow(
+                        ()-> new RuntimeException("Category not found")
+                );
+
         boolean existingProduct = productRepository
-                .existsByNameAndActiveTrue(trimName);
+                .existsByNameIgnoreCaseAndCategoryAndActiveTrue(trimName, category);
 
         if(existingProduct){
-            throw new IllegalArgumentException("A Product with the same name already exists");
+            throw new IllegalArgumentException("A Product with the same Name already exists in this Category");
         }
+
+
 
         Product createdProduct = productMapper.toEntity(request);
 
@@ -50,11 +61,19 @@ public class ProductServiceImpl implements ProductService {
                         ()-> new RuntimeException("Product not found")
                 );
 
-        boolean existingProduct = productRepository.existsByNameAndActiveTrueAndIdNot(id, trimName);
+        Category category = categoryRepository
+                .findByIdAndActiveTrue(request.getCategoryId())
+                .orElseThrow(
+                        ()-> new RuntimeException("Category not found")
+                );
+
+        boolean existingProduct = productRepository
+                .existsByNameIgnoreCaseAndCategoryAndActiveTrueAndIdNot(trimName, category, id);
 
         if(existingProduct){
-            throw new IllegalArgumentException("A Product with the same name already exists");
+            throw new IllegalArgumentException("A Product with the same Name already exists in this Category");
         }
+
 
         Product updatedProduct = productMapper.toUpdateEntity(request, product);
 
@@ -67,13 +86,14 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public List<ProductResponse> findAll() {
         return productRepository
-                .findAll()
+                .findByActiveTrue()
                 .stream()
                 .map(productMapper::toResponse)
                 .toList();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ProductResponse findByIdAndActiveTrue(Long id) {
       Product product =  productRepository.findByIdAndActiveTrue(id)
                 .orElseThrow(
@@ -82,6 +102,25 @@ public class ProductServiceImpl implements ProductService {
 
         return productMapper.toResponse(product);
     }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProductResponse> findByCategory(Long categoryId){
+        Category existingCategory = categoryRepository
+                .findByIdAndActiveTrue(categoryId)
+                .orElseThrow(
+                        ()-> new RuntimeException("Category not found")
+                );
+        return productRepository
+                        .findByCategory(existingCategory)
+                        .stream()
+                        .map(productMapper::toResponse)
+                        .toList();
+    }
+
+
+
 
 
     @Override

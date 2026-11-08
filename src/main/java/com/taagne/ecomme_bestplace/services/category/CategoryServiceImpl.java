@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -57,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService{
         String trimmedName = request.getCategoryName().trim();
 
         boolean existCategory = categoryRepository
-                .existsByNameAndActiveTrue(trimmedName);
+                .existsByNameIgnoreCaseAndActiveTrue(trimmedName);
 
 
         if(existCategory){
@@ -85,7 +84,7 @@ public class CategoryServiceImpl implements CategoryService{
                 );
 
 
-        boolean existsCategory = categoryRepository.existsByNameAndActiveTrueAndIdNot(trimmedName, id);
+        boolean existsCategory = categoryRepository.existsByNameIgnoreCaseAndActiveTrueAndIdNot(trimmedName, id);
 
         if(existsCategory){
             throw new IllegalArgumentException("A category with same name already exists");
